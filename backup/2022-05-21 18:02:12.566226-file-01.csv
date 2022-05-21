@@ -1,0 +1,15 @@
+
+BSSID, First time seen, Last time seen, channel, Speed, Privacy, Cipher, Authentication, Power, # beacons, # IV, LAN IP, ID-length, ESSID, Key
+38:43:7D:4F:2D:08, 2022-05-21 17:42:54, 2022-05-21 17:42:54,  1, 195, WPA, CCMP TKIP, PSK, -83,        3,        0,   0.  0.  0.  0,   7, ONO6C32, 
+DC:53:7C:45:51:76, 2022-05-21 17:42:54, 2022-05-21 17:42:54,  1, 130, WPA2, CCMP TKIP, PSK, -90,        1,        0,   0.  0.  0.  0,  11, Abcom-wi-fi, 
+5C:35:3B:82:44:59, 2022-05-21 17:42:54, 2022-05-21 17:42:54,  6, 130, WPA2, CCMP TKIP, PSK, -44,        3,        0,   0.  0.  0.  0,   4, KUKA, 
+08:C0:21:33:D1:A0, 2022-05-21 17:42:54, 2022-05-21 17:42:56,  8, 130, WPA2, CCMP TKIP, PSK, -72,        5,        0,   0.  0.  0.  0,  12, TRING ASLLAN, 
+64:EE:B7:B9:64:5B, 2022-05-21 17:42:55, 2022-05-21 17:42:55,  2, 270, WPA2, CCMP TKIP, PSK, -87,        9,        0,   0.  0.  0.  0,   6, Fatmir, 
+E4:47:B3:EF:69:6E, 2022-05-21 17:42:55, 2022-05-21 17:42:55,  3, 130, WPA2, CCMP TKIP, PSK, -88,        2,        0,   0.  0.  0.  0,  17, ALBtelecom-Gjergj, 
+00:2E:C7:3F:0C:28, 2022-05-21 17:42:55, 2022-05-21 17:42:56,  4, 130, WPA2, CCMP TKIP, PSK, -72,        6,        0,   0.  0.  0.  0,   6, JETMIR, 
+3C:F8:08:36:2D:CC, 2022-05-21 17:42:56, 2022-05-21 17:42:56,  9, 130, WPA2, CCMP TKIP, PSK, -87,        3,        0,   0.  0.  0.  0,  11, TRING NARDI, 
+50:78:B3:D5:88:84, 2022-05-21 17:42:56, 2022-05-21 17:42:56,  9, 130, WPA2, CCMP TKIP, PSK, -79,        2,        0,   0.  0.  0.  0,  17, ALBtelecom-Ardian, 
+C8:8D:83:50:52:12, 2022-05-21 17:42:56, 2022-05-21 17:42:56,  4, 130, WPA2, CCMP TKIP, PSK, -85,        3,        0,   0.  0.  0.  0,   6, Jonida, 
+
+Station MAC, First time seen, Last time seen, Power, # packets, BSSID, Probed ESSIDs
+
