@@ -4,10 +4,6 @@ from datetime import datetime
 
 active_wireless_networks = []
 
-# We use this function to test if the ESSID is already in the list file. 
-# If so we return False so we don't add it again.
-# If it is not in the lst we return True which will instruct the elif 
-# statement to add it to the lst.
 def check_for_essid(essid, lst):
 
     if len(lst) == 0: return False 
@@ -59,6 +55,9 @@ for k, v in enumerate(scanned_nics):
     print(f"{k} - {v}")
 
 while True:
+    if len(scanned_nics) == 1:
+        nic_index = 0 
+        break
     nic_index = input("Select any of the following NICs: ")
     try:
         if scanned_nics[int(nic_index)]:
@@ -66,10 +65,9 @@ while True:
     except:
         print("Please enter a number that corresponds with the choices available.")
 
-# For easy reference we call the selected interface hacknic
 hacknic = scanned_nics[int(nic_index)]
 
-# Killing all conflicting processes using airmon-ng
+print(f"Killing intrusive system processes...")
 kill_conflicting_processes =  subprocess.run(["sudo", "airmon-ng", "check", "kill"], stdout=DEVNULL)
 
 # Put wireless in Monitor mode
