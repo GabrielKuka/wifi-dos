@@ -12,12 +12,16 @@ def success(msg):
     return f"{Fore.GREEN}{msg}{Style.RESET_ALL}"
 
 def delete_csv():
+    """Delete all csv files inside the project folder."""
+
     csv_files = list(filter(lambda x: '.csv' in x, os.listdir('.')))
 
     for file in csv_files:
         os.remove(file) 
 
 def reset_nic(nic):
+    """Reset the wifi adapter to managed mode and start network services."""
+
     if not nic:
         print("No wifi adapter to reset.")
         return
@@ -42,6 +46,8 @@ def ap_present(essid, lst):
     return False 
 
 def get_NICs():
+    """Scan for NICs using regex."""
+
     nic_regex = re.compile("wlan[0-9]+")
 
     scan_nic_cmd = subprocess.run(cmd('ifconfig'), capture_output=True).stdout.decode()

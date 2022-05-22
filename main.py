@@ -125,7 +125,7 @@ def attack(ap_mac, ap_channel):
 
 if __name__ == '__main__':
 
-    if not is_root:
+    if not is_root():
         print(error("You need to run as root."))
         exit()
 
