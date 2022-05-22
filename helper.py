@@ -1,8 +1,15 @@
 from asyncio.subprocess import DEVNULL
 import subprocess, os, re 
+from colorama import Fore, Style
 
 def cmd(cmd):
     return cmd.split(' ')
+
+def error(msg):
+    return f"{Fore.RED}[-] Error: {msg}{Style.RESET_ALL}"
+
+def success(msg):
+    return f"{Fore.GREEN}{msg}{Style.RESET_ALL}"
 
 def delete_csv():
     csv_files = list(filter(lambda x: '.csv' in x, os.listdir('.')))
@@ -20,11 +27,11 @@ def reset_nic(nic):
     print(f"\nAttack halted.\nResetting {nic} to managed mode...", end=" ")
     subprocess.run(cmd("sudo pkill airodump-ng"))
     subprocess.run(cmd(f"airmon-ng stop {nic}"), stdout=DEVNULL)
-    print("Done.")
+    print(success("Done"))
 
     print("Restarting NIC processes...", end=" ")
     subprocess.run(cmd("sudo systemctl start wpa_supplicant NetworkManager"))
-    print("Done.\n")
+    print(success("Done.\n"))
 
 def ap_present(essid, lst):
 

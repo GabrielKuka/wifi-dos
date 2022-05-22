@@ -1,6 +1,6 @@
 from asyncio.subprocess import DEVNULL
 import subprocess, os, csv, time
-from helper import get_NICs, cmd, is_root, delete_csv, reset_nic, ap_present
+from helper import get_NICs, cmd, is_root, delete_csv, reset_nic, ap_present, error, success
 
 active_APs = []
 nic = None
@@ -12,12 +12,12 @@ def setup_nic():
     NICs = get_NICs()
 
     if len(NICs) == 0:
-        print("[-] Error: No Wifi Adapters found.")
+        print(error("No Wifi Adapters found."))
         exit()
     
     if len(NICs) == 1:
         nic = NICs[0]
-        print(f"Wifi adapter {nic} will be used for the attack.")
+        print(f"Wifi adapter {success(nic)} will be used for the attack.")
     else:
         print("The following WiFi adapters were found:")
         for k, v in enumerate(NICs):
@@ -39,12 +39,12 @@ def setup_nic():
 
     print(f"Killing intrusive system processes...", end=" ")
     subprocess.run(cmd("sudo airmon-ng check kill"), stdout=DEVNULL)
-    print("Done.")
+    print(success("Done."))
 
     print(f"Putting {nic} into monitored mode...", end=" ")
     subprocess.run(cmd(f"sudo airmon-ng start {nic}"), stdout=DEVNULL)
     nic += "mon"
-    print("Done.\n")
+    print(success("Done.\n"))
 
 def scan_access_points():
     global active_APs, nic
@@ -85,12 +85,12 @@ def scan_access_points():
                 print(f"{index}\t{item['BSSID']}\t{item['channel'].strip()}\t\t{item['ESSID']}")
             time.sleep(1)
     except FileExistsError:
-        print("[-] Error: CSV file not found.")
+        print(error("CSV file not found."))
         reset_nic(nic)
     except KeyboardInterrupt:
         delete_csv()
     except Exception as e:
-        print(f"[-] Error: {e}")
+        print(error(e))
         reset_nic(nic)
 
 def choose_access_point():
@@ -105,7 +105,7 @@ def choose_access_point():
             reset_nic(nic)
             exit()
         except:
-            print("[-] Error: Invalid choice. Please try again.")
+            print(error("Invalid choice. Please try again."))
 
     ap_mac = AP["BSSID"]
     ap_channel = AP["channel"].strip()
@@ -126,7 +126,7 @@ def attack(ap_mac, ap_channel):
 if __name__ == '__main__':
 
     if not is_root:
-        print("[-] Error: You need to run as root.")
+        print(error("You need to run as root."))
         exit()
 
     setup_nic()
