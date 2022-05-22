@@ -14,24 +14,28 @@ def setup_nic():
     if len(NICs) == 0:
         print("[-] Error: No Wifi Adapters found.")
         exit()
+    
+    if len(NICs) == 1:
+        nic = NICs[0]
+        print(f"Wifi adapter {nic} will be used for the attack.")
+    else:
+        print("The following WiFi adapters were found:")
+        for k, v in enumerate(NICs):
+            print(f"{k} - {v}")
 
-    print("The following WiFi adapters were found:")
-    for k, v in enumerate(NICs):
-        print(f"{k} - {v}")
-
-    # Choose NIC 
-    while True:
-        if len(NICs) == 1:
-            nic_index = 0 
-            break
-        nic_index = input("Select any of the following NICs: ")
-        try:
-            if NICs[int(nic_index)]:
+        # Choose NIC 
+        while True:
+            if len(NICs) == 1:
+                nic_index = 0 
                 break
-        except:
-            print("Please enter a number that corresponds with the choices available.")
+            nic_index = input("Select any of the following NICs: ")
+            try:
+                if NICs[int(nic_index)]:
+                    break
+            except:
+                print("Please enter a number that corresponds with the choices available.")
 
-    nic = NICs[int(nic_index)]
+        nic = NICs[int(nic_index)]
 
     print(f"Killing intrusive system processes...", end=" ")
     subprocess.run(cmd("sudo airmon-ng check kill"), stdout=DEVNULL)
