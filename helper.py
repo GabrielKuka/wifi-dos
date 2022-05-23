@@ -2,6 +2,9 @@ from asyncio.subprocess import DEVNULL
 import subprocess, os, re 
 from colorama import Fore, Style
 
+ATTACK_ALL = 1
+SELECT_VICTIM = 2
+
 def cmd(cmd):
     return cmd.split(' ')
 
@@ -44,6 +47,14 @@ def ap_present(essid, lst):
             return True
 
     return False 
+
+def victim_present(func, lst):
+
+    for item in lst:
+        if func(item['Station_Mac']):
+            return True 
+
+    return False
 
 def get_NICs():
     """Scan for NICs using regex."""
