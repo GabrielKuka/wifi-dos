@@ -40,18 +40,10 @@ def reset_nic(nic):
     subprocess.run(cmd("sudo systemctl start wpa_supplicant NetworkManager"))
     print(success("Done.\n"))
 
-def ap_present(essid, lst):
-
+def device_present(present, lst):
+    
     for item in lst:
-        if essid in item["ESSID"]:
-            return True
-
-    return False 
-
-def victim_present(func, lst):
-
-    for item in lst:
-        if func(item['Station_Mac']):
+        if present(item):
             return True 
 
     return False

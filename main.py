@@ -1,6 +1,6 @@
-from asyncio.subprocess import DEVNULL
 import subprocess, os, csv, time
-from helper import get_NICs, cmd, is_root, delete_csv, reset_nic, ap_present, error, success, victim_present, ATTACK_ALL, SELECT_VICTIM
+from asyncio.subprocess import DEVNULL
+from helper import *
 
 active_APs = []
 active_victims = []
@@ -12,7 +12,7 @@ def setup_nic():
     # Get NICs
     NICs = get_NICs()
 
-    if len(NICs) == 0:
+    if not NICs:
         print(error("No Wifi Adapters found."))
         exit()
     
@@ -76,7 +76,7 @@ def scan_access_points():
                     if row["BSSID"] == "Station MAC":
                         break
 
-                    if not ap_present(row["ESSID"], active_APs):
+                    if not device_present(lambda x: row['ESSID'] in x['ESSID'], active_APs):
                         active_APs.append(row)
 
             print("Scanning. Press Ctrl+C to stop scanning and choose AP to attack.\n")
@@ -114,6 +114,7 @@ def choose_access_point():
     return ap_mac, ap_channel
 
 def choose_attack_mode():
+    subprocess.call("clear", shell=True) 
 
     print("1. Attack all connected devices.")
     print("2. Select a device to attack.")
@@ -163,7 +164,7 @@ def scan_victims(ap_mac):
                     if invalid_row:
                         continue
                     
-                    if not victim_present(lambda x: row['Station_Mac'] in x, active_victims):
+                    if not device_present(lambda x: row['Station_Mac'] in x['Station_Mac'], active_victims):
                         active_victims.append(row)
 
             print("Scanning. Press Ctrl+C to cancel scanning.")
