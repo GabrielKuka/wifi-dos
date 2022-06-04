@@ -33,7 +33,7 @@ def reset_nic(nic):
 
     print(f"\nAttack halted.\nResetting {nic} to managed mode...", end=" ")
     subprocess.run(cmd("sudo pkill airodump-ng"))
-    subprocess.run(cmd(f"airmon-ng stop {nic}"), stdout=DEVNULL)
+    subprocess.run(cmd(f"sudo airmon-ng stop {nic}"), stdout=DEVNULL)
     print(success("Done"))
 
     print("Restarting NIC processes...", end=" ")

