@@ -32,7 +32,7 @@ def reset_nic(nic):
     delete_csv()
 
     print(f"\nAttack halted.\nResetting {nic} to managed mode...", end=" ")
-    subprocess.run(cmd("sudo pkill airodump-ng"))
+    #subprocess.run(cmd("sudo pkill airodump-ng"))
     subprocess.run(cmd(f"sudo airmon-ng stop {nic}"), stdout=DEVNULL)
     print(success("Done"))
 

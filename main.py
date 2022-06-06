@@ -241,4 +241,4 @@ if __name__ == '__main__':
         scan_victims(mac)
         victim = choose_victim()
 
-    attack(mac, ch, victim)
+    attack(mac, ch)
